@@ -48,6 +48,9 @@ app.get('/callback', async function (req, res) {
     const storedState = req.cookies ? req.cookies[stateKey] : null;
     const cb = req.query.cb;
 
+    console.log("state", state);
+    console.log("stored", storedState);
+
     if (state === null || state !== storedState) {
         res.redirect('/#' +
             qs.stringify({
@@ -62,7 +65,11 @@ app.get('/callback', async function (req, res) {
 
             res.cookie("access_token", tokenResponse.data.access_token, { secure: process.env.NODE_ENV !== "development", httpOnly: true });
             res.cookie("refresh_token", tokenResponse.data.refresh_token, { secure: process.env.NODE_ENV !== "development", httpOnly: true });
-            res.cookie("p", Buffer.from(JSON.stringify(profileResponse.data)).toString("base64"), { secure: process.env.NODE_ENV !== "development", httpOnly: false });
+            res.cookie("p", Buffer.from(JSON.stringify(profileResponse.data)).toString("base64"), {
+                domain: process.env.NODE_ENV !== "development" ? "krzen.ski" : null,
+                secure: process.env.NODE_ENV !== "development",
+                httpOnly: false
+            });
             res.redirect(cb ? cb + "/?auth=true" : "/");
         } catch (e) {
             console.log(" callback error", e.response);
@@ -84,8 +91,6 @@ app.get('/refresh_token', async function (req, res, next) {
 });
 
 app.get('/playlists', compression(), async function (req, res, next) {
-
-    // return res.status(200).send(require("./playlist-mock.json"));
 
     const token = req.cookies.access_token;
     const query = req.headers.q;
