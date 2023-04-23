@@ -1,0 +1,165 @@
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@400&display=swap");
+
+:focus {
+  outline: none;
+}
+::-moz-focus-inner {
+  border: 0;
+}
+
+html {
+  text-rendering: optimizeLegibility;
+  font-variant-ligatures: common-ligatures;
+  font-kerning: normal;
+  background: url("./broken_noise.png");
+}
+
+html::before {
+  content: "";
+  position: fixed;
+  z-index: -2;
+  top: 44%;
+  left: 44%;
+  width: 12%;
+  height: 12%;
+  transform: scale(10);
+  background-color: #ffffff1c;
+}
+
+body {
+  margin: 0;
+}
+
+.search-section {
+  width: 95%;
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  justify-content: center;
+  margin: auto;
+  margin-top: 1.5rem;
+  gap: 1rem;
+}
+.search-bar {
+  font-size: 30px;
+  background-color: rgba(0, 0, 0, 0.1);
+  color: #eee;
+  text-shadow: 0 0.05em rgba(0, 0, 0, 0.5);
+  border: none;
+  padding: 0.4em;
+  box-sizing: border-box;
+  border-radius: 0.3em;
+  box-shadow: 0 0 0.1em rgba(255, 255, 255, 0.1),
+    inset 0 0.05em 0.3em rgba(0, 0, 0, 0.8);
+}
+.search-bar:focus {
+  box-shadow: 0 0 0.1em rgba(255, 255, 255, 0.3),
+    inset 0 0.05em 0.3em rgba(0, 0, 0, 0.8);
+}
+
+.list-section {
+  width: 95%;
+  margin: auto;
+  margin-top: 3rem;
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  color: #c6c6c6;
+  font-family: Ubuntu;
+}
+.found-item {
+  font-size: 30px;
+}
+.found-item {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2rem;
+  gap: 1rem;
+}
+.playlist-name {
+  font-size: 1.5em;
+}
+.album-cover {
+  position: relative;
+}
+.album-cover > svg {
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  transform: translate(50%, -50%);
+}
+.track {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 1.5rem;
+}
+.track-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.artists {
+  font-size: 16px;
+  padding-top: 0;
+  color: #979797;
+}
+
+.update-playlists {
+  display: flex;
+  gap: 1rem;
+}
+.last-updated-text {
+  color: #979797;
+  font-size: 16px;
+  font-family: Ubuntu;
+}
+.refresh-btn {
+  font-size: 16px;
+  background: none;
+  border: none;
+  color: #c6c6c6;
+  font-family: Ubuntu;
+  cursor: pointer;
+  font-weight: 600;
+}
+.refresh-btn:hover {
+  color: #6cae73;
+  /* color: #1ed760; */
+  /* scale: 1.05; */
+  transition-duration: 0.1s;
+}
+
+/* button styles */
+
+.update-btn {
+  margin-left: auto;
+  cursor: pointer;
+  font-size: 24px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #000;
+  text-shadow: 0.02em 0.02em 0.03em rgba(255, 255, 255, 0.2);
+  border-radius: 0.3em;
+  box-sizing: border-box;
+  padding: 0.4em 1em;
+  border: 0.1em solid rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 0.07em rgba(255, 255, 255, 0.1),
+    0 0.2em 0.2em -0.15em rgba(0, 0, 0, 0.5), inset 0 0 0.7em rgba(0, 0, 0, 0.2),
+    inset 0 0.1em 0.1em rgba(255, 255, 255, 0.15);
+  transition-property: background-color, color, box-shadow, text-shadow;
+  transition-duration: 0.2s;
+  transition-timing-function: cubic-bezier(0, 0.58, 0.58, 1);
+
+  background-color: rgb(72, 72, 72);
+  bottom: 0;
+}
+.update-btn:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 0.07em rgba(255, 255, 255, 0.1),
+    0 0.2em 0.2em -0.15em rgba(0, 0, 0, 0.5), inset 0 0 0.7em rgba(0, 0, 0, 0.4),
+    inset 0 0.1em 0.1em rgba(255, 255, 255, 0.1);
+  color: #333;
+
+  background-color: rgb(92, 92, 92);
+}
