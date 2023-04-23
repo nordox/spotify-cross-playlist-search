@@ -1,3 +1,9 @@
+window.addEventListener("message", (event) => {
+    if (event.data === "disable-scroll") {
+        document.querySelector("body").style.overflow = "auto";
+    }
+});
+
 document.addEventListener('DOMContentLoaded', () => {
 
     getPlaylists("abc", true)
