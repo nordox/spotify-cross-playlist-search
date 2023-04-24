@@ -7,6 +7,18 @@
   border: 0;
 }
 
+@media only screen and (max-width: 480px) {
+  h1.playlist-name {
+    font-size: 1em;
+  }
+  .track-name {
+    font-size: 1rem;
+  }
+  span.artists {
+    font-size: 0.75rem;
+  }
+}
+
 html {
   text-rendering: optimizeLegibility;
   font-variant-ligatures: common-ligatures;
@@ -34,7 +46,6 @@ body {
   width: 95%;
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
   justify-content: center;
   margin: auto;
   margin-top: 1.5rem;
