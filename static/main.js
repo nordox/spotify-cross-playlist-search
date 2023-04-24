@@ -1,34 +1,57 @@
 window.addEventListener("message", (event) => {
     if (event.data === "disable-scroll") {
-        document.querySelector("body").style.overflow = "auto";
+        document.querySelector("body").style.overflow = "hidden";
     }
 });
 
+let isLoading = false;
+
 document.addEventListener('DOMContentLoaded', () => {
 
-    getPlaylists("abc", true)
+    startLoading();
+    getPlaylists("", true).finally(_ => {
+        $(".update-playlists").removeClass("hidden");
+        endLoading();
+    });
 
     document.querySelector(".search-section").addEventListener('keypress', async (event) => {
-        if (event.key === "Enter") {
+        if (event.key === "Enter" && !isLoading) {
             event.preventDefault();
 
             const input = event.target.value.trim().toLowerCase();
 
             if (!input) return;
 
+            $(".search-bar").blur();
+            $(".list-section").hide();
+            $(".list-section").empty(); // needed?
+            startLoading();
+
             const playlists = await getPlaylists(input, true);
             const found = findInPlaylists(playlists, input);
 
-            renderFound(found);
+            if (!_.isEmpty(found)) {
+                renderFound(found);
+            }
+
+            resize();
+
+            endLoading();
         }
     });
 
     document.querySelector(".refresh-btn").addEventListener('click', async (event) => {
-        console.log(await getPlaylists("abc", false));
+        if (isLoading) return;
+        $(".list-section").hide();
+        startLoading();
+        resize();
+        const playlists = await getPlaylists("abc", false);
+        endLoading();
     });
 
 });
 
+// resize parent iframe container
 function resize(selector) {
     const height = document.querySelector(selector || ".container").scrollHeight;
     window.parent.postMessage(["setHeight", height + 50], "*");
@@ -76,7 +99,7 @@ function renderFound(found) {
 
     $(".list-section").empty();
     $(".list-section").append(elements);
-    resize();
+    $(".list-section").show();
 }
 
 function findInPlaylists(playlists, input) {
@@ -110,4 +133,14 @@ function findInPlaylists(playlists, input) {
     }
 
     return found;
+}
+
+function startLoading() {
+    isLoading = true;
+    $(".loading").show();
+}
+
+function endLoading() {
+    isLoading = false;
+    $(".loading").hide();
 }

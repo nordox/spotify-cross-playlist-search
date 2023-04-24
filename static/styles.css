@@ -57,6 +57,10 @@ body {
     inset 0 0.05em 0.3em rgba(0, 0, 0, 0.8);
 }
 
+div.loading {
+  margin-top: 2rem;
+}
+
 .list-section {
   width: 95%;
   margin: auto;
@@ -68,6 +72,7 @@ body {
   justify-content: center;
   color: #c6c6c6;
   font-family: Ubuntu;
+  display: none;
 }
 .found-item {
   font-size: 30px;
@@ -83,6 +88,9 @@ body {
 }
 .album-cover {
   position: relative;
+}
+.album-cover > img {
+  border-radius: 50%;
 }
 .album-cover > svg {
   position: absolute;
@@ -101,7 +109,7 @@ body {
   justify-content: space-evenly;
 }
 .artists {
-  font-size: 16px;
+  font-size: 1rem;
   padding-top: 0;
   color: #979797;
 }
@@ -109,6 +117,9 @@ body {
 .update-playlists {
   display: flex;
   gap: 1rem;
+}
+.update-playlists.hidden {
+  display: none;
 }
 .last-updated-text {
   color: #979797;
