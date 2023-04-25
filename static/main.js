@@ -2,6 +2,9 @@ window.addEventListener("message", (event) => {
     if (event.data === "disable-scroll") {
         document.querySelector("body").style.overflow = "hidden";
     }
+    if (event.data === "request-access") {
+        window.location.href = "/request_access.html";
+    }
 });
 
 let isLoading = false;
@@ -9,7 +12,7 @@ let isLoading = false;
 document.addEventListener('DOMContentLoaded', () => {
 
     startLoading();
-    getPlaylists("", true).finally(_ => {
+    getPlaylists("abc", true).finally(_ => {
         $(".update-playlists").removeClass("hidden");
         endLoading();
     });
@@ -32,6 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (!_.isEmpty(found)) {
                 renderFound(found);
+                setupClickHandlers();
             }
 
             resize();
@@ -46,10 +50,21 @@ document.addEventListener('DOMContentLoaded', () => {
         startLoading();
         resize();
         const playlists = await getPlaylists("abc", false);
+        console.log(playlists);
         endLoading();
     });
 
 });
+
+
+function setupClickHandlers() {
+    document.querySelectorAll(".open-track-btn > button").forEach(el => {
+        el.addEventListener('click', function (event) {
+            event.preventDefault();
+            window.open(this.dataset.href, "_blank");
+        });
+    });
+}
 
 // resize parent iframe container
 function resize(selector) {
@@ -59,6 +74,10 @@ function resize(selector) {
 
 async function getPlaylists(input, shouldCache) {
     const response = await fetch(`/playlists`, { cache: shouldCache ? "default" : "reload", headers: { q: input } });
+    if (response.status === 403) {
+        window.location.href = "/request_access.html";
+    }
+    localStorage.removeItem("email");
     const date = new Date(response.headers.get("Date"));
     $(".last-updated-text").text(`Last updated: ${date.toDateString()} at ${date.toLocaleTimeString()}`);
     return await response.json();
@@ -80,15 +99,16 @@ function renderFound(found) {
             }
             const imgSrc = track.album.images[2]?.url;
             item.append(`
-                <div class="track ${!imgSrc ? "not-avail" : ""}">
+                <div class="track ${!imgSrc ? "not-avail" : ""} ${!track.id ? "disabled" : ""}">
                 <div class="album-cover">
                     <img src="${imgSrc || "https://i.scdn.co/image/ab6775700000ee85aeb6fb34fde89e0c758f7bbb"}" width=64 height=64 />
                     <svg role="img" height="16" width="16" viewBox="0 0 16 16" class="Svg-ytk21e-0 jAKAlG"><path d="M10 2v9.5a2.75 2.75 0 11-2.75-2.75H8.5V2H10zm-1.5 8.25H7.25A1.25 1.25 0 108.5 11.5v-1.25z"></path></svg>
                 </div>
                 <div class="track-content">
-                    <span class="track-name">${track.name}</span>
-                    <span class="artists">${artists.join(', ')}</span>
+                    <a class="track-name" href="${track.uri}" target="_blank">${track.name}</a>
+                    <span class="artists">${artists.join(', ')} · ${track.album.name}</span>
                 </div>
+                <div class="open-track-btn"><button data-href="${track.external_urls.spotify}" data-uri="${track.uri}"><img src="Spotify_Icon_RGB_White.png" />Play on Spotify</button></div>
                 </div>
             `);
         }
@@ -110,16 +130,17 @@ function findInPlaylists(playlists, input) {
             found[playlist.id] = {};
 
             for (let { track } of playlist.tracks) {
-                if (found[playlist.id][track.id]) continue;
+                const id = track.id || track.uri;
+                if (found[playlist.id][id]) continue;
 
                 // check track name
                 if (track.name.toLowerCase().includes(input)) {
-                    found[playlist.id][track.id] = { playlist: playlist.name, ...track };
+                    found[playlist.id][id] = { playlist: playlist.name, ...track };
                 } else {
                     // Check artist
                     for (let artist of track.artists) {
                         if (artist.name.toLowerCase().includes(input)) {
-                            found[playlist.id][track.id] = { playlist: playlist.name, ...track };
+                            found[playlist.id][id] = { playlist: playlist.name, ...track };
                         }
                     }
                 }

@@ -1,0 +1,75 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            width: 95%;
+            margin: auto;
+            color: #c6c6c6;
+            font-family: Ubuntu;
+            font-size: 1.5rem;
+        }
+        .container>input {
+            width: 50%;
+        }
+    </style>
+
+    <script>
+        function resize(selector) {
+            const height = document.querySelector(selector || ".container").scrollHeight;
+            window.parent.postMessage(["setHeight", height + 50], "*");
+        }
+        window.addEventListener("message", (event) => {
+            if (event.data === "disable-scroll") {
+                document.querySelector("body").style.overflow = "hidden";
+            }
+        });
+        $(document).ready(() => {
+            const pending = localStorage.getItem("email");
+            if (pending) {
+                $(".text").text(`Pending request: ${pending}`);
+                $(".email-input").hide();
+            }
+
+            resize();
+            $(".email-input").on("keypress", (event) => {
+                if (event.key === "Enter") {
+                    event.preventDefault();
+                    console.log("enter");
+                    $.ajax({
+                        "url": `https://api.krzen.ski/request-access`,
+                        "method": "POST",
+                        "headers": {
+                            "Content-Type": "application/json"
+                        },
+                        "data": JSON.stringify({ email: event.target.value.trim() })
+                    }).done((response) => {
+                        $(".container").empty();
+                        $(".container").append(`
+                            <p>Thank you! Please check again shortly.</p>
+                        `);
+                        localStorage.setItem("email", event.target.value.trim());
+                    });
+                }
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <p class="text">
+            This app is still in development mode. Please enter the email associated with your Spotify account to
+            request access.
+        </p>
+        <input class="email-input" type="text" placeholder="email">
+        <div class="pending"></div>
+    </div>
+</body>
+
+</html>

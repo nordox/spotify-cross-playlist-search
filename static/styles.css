@@ -51,7 +51,8 @@ body {
   margin-top: 1.5rem;
   gap: 1rem;
 }
-.search-bar {
+.search-bar,
+input[type="text"] {
   font-size: 30px;
   background-color: rgba(0, 0, 0, 0.1);
   color: #eee;
@@ -63,7 +64,8 @@ body {
   box-shadow: 0 0 0.1em rgba(255, 255, 255, 0.1),
     inset 0 0.05em 0.3em rgba(0, 0, 0, 0.8);
 }
-.search-bar:focus {
+.search-bar:focus,
+input[type="text"] {
   box-shadow: 0 0 0.1em rgba(255, 255, 255, 0.3),
     inset 0 0.05em 0.3em rgba(0, 0, 0, 0.8);
 }
@@ -92,7 +94,7 @@ div.loading {
   display: flex;
   flex-direction: column;
   margin-bottom: 2rem;
-  gap: 1rem;
+  gap: 2rem;
 }
 .playlist-name {
   font-size: 1.5em;
@@ -101,7 +103,7 @@ div.loading {
   position: relative;
 }
 .album-cover > img {
-  border-radius: 50%;
+  /* border-radius: 50%; */
 }
 .album-cover > svg {
   position: absolute;
@@ -119,10 +121,44 @@ div.loading {
   flex-direction: column;
   justify-content: space-evenly;
 }
+.track-name {
+  color: #c6c6c6;
+  text-decoration: none;
+}
+.disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.5;
+}
+.track-name:hover {
+  text-decoration: underline;
+}
 .artists {
   font-size: 1rem;
   padding-top: 0;
   color: #979797;
+}
+.open-track-btn {
+  flex-grow: 1;
+  flex-shrink: 0;
+  align-self: center;
+}
+div.open-track-btn > button {
+  display: flex;
+  gap: 5px;
+  border: none;
+  border-radius: 20px;
+  padding: 1rem 2rem;
+  color: white;
+  font-size: 20px;
+  align-items: center;
+  box-shadow: none;
+}
+div.open-track-btn > button:hover {
+  color: white;
+}
+div.open-track-btn > button > img {
+  width: 32px;
 }
 
 .update-playlists {
@@ -155,7 +191,8 @@ div.loading {
 
 /* button styles */
 
-.update-btn {
+.update-btn,
+.open-track-btn > button {
   margin-left: auto;
   cursor: pointer;
   font-size: 24px;
@@ -176,7 +213,8 @@ div.loading {
   background-color: rgb(72, 72, 72);
   bottom: 0;
 }
-.update-btn:hover {
+.update-btn:hover,
+.open-track-btn > button:hover {
   background-color: rgba(255, 255, 255, 0.2);
   box-shadow: 0 0 0.07em rgba(255, 255, 255, 0.1),
     0 0.2em 0.2em -0.15em rgba(0, 0, 0, 0.5), inset 0 0 0.7em rgba(0, 0, 0, 0.4),

@@ -16,7 +16,7 @@ app.use(cookieParser());
 const spotify = new SpotifyClient(client_id, client_secret, redirect_uri);
 
 app.get('/', function (req, res, next) {
-    if (!req.cookies.access_token) {
+    if (req.headers['sec-fetch-dest'] !== 'iframe' && !req.cookies.access_token) {
         return res.redirect('/login');
     }
     next();
@@ -71,7 +71,11 @@ app.get('/callback', async function (req, res) {
         } catch (e) {
             console.log(" callback error", e.response);
 
-            if (e.response.data.error.status === 401) {
+            if (e.response.status === 403) {
+                return res.redirect(cb ? cb + "/?auth=false" : "/request_access.html");
+            }
+
+            if (e.response.data.error && e.response.data.error.status === 401) {
                 return res.redirect('/refresh_token');
             }
         }
@@ -124,7 +128,11 @@ app.get('/playlists', compression(), async function (req, res, next) {
     } catch (e) {
         console.log("playlist error", e);
 
-        if (e.response.data.error.status === 401) {
+        if (e.response.status === 403) {
+            return res.status(403).send();
+        }
+
+        if (e.response.data.error && e.response.data.error.status === 401) {
             return res.redirect('/refresh_token');
         }
     }
