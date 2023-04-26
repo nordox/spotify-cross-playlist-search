@@ -42,6 +42,15 @@ body {
   margin: 0;
 }
 
+
+.container > h1,
+.search-section,
+.list-section,
+.toggle-section {
+  width: 95%;
+  margin: auto;
+}
+
 .search-section {
   width: 95%;
   display: flex;
@@ -68,6 +77,18 @@ input[type="text"] {
 input[type="text"] {
   box-shadow: 0 0 0.1em rgba(255, 255, 255, 0.3),
     inset 0 0.05em 0.3em rgba(0, 0, 0, 0.8);
+}
+
+.toggle-section {
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+  gap: 0.5rem;
+}
+.toggle-section > span {
+  font-size: 1.5rem;
+  font-family: Ubuntu;
+  color: #c6c6c6;
 }
 
 div.loading {
@@ -222,4 +243,42 @@ div.open-track-btn > button > img {
   color: #333;
 
   background-color: rgb(92, 92, 92);
+}
+
+/* toggle */
+.toggle {
+  position: relative;
+  --inactive-bg: #c6c6c6;
+  --active-bg: #6cae73;
+  --size: 2rem;
+  appearance: none;
+  width: calc(var(--size) * 2.2);
+  height: var(--size);
+  display: inline-block;
+  border-radius: calc(var(--size) / 2);
+  cursor: pointer;
+  background-color: var(--inactive-bg);
+  transition: background 0.3s ease-out;
+}
+.toggle:checked {
+  background-color: var(--active-bg);
+  background-position: calc(var(--size) / 1.75) 0;
+}
+
+.toggle::after {
+  position: absolute;
+  content: "";
+  width: 2rem;
+  height: 2rem;
+  top: 0;
+  left: 0;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  transform: scale(1.1);
+  transition: 0.3s;
+}
+
+.toggle:checked:after {
+  left: 50%;
 }

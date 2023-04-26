@@ -11,6 +11,12 @@ let isLoading = false;
 
 document.addEventListener('DOMContentLoaded', () => {
 
+    $(".toggle").prop("checked", localStorage.getItem("has-app") === 'true');
+
+    $(".toggle").change(function () {
+        localStorage.setItem("has-app", this.checked);
+    });
+
     startLoading();
     getPlaylists("abc", true).finally(_ => {
         $(".update-playlists").removeClass("hidden");
@@ -61,7 +67,8 @@ function setupClickHandlers() {
     document.querySelectorAll(".open-track-btn > button").forEach(el => {
         el.addEventListener('click', function (event) {
             event.preventDefault();
-            window.open(this.dataset.href, "_blank");
+            const hasApp = $(".toggle").is(':checked');
+            window.open(hasApp ? this.dataset.uri : this.dataset.href, "_blank");
         });
     });
 }
