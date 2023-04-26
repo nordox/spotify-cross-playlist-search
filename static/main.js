@@ -140,8 +140,11 @@ function findInPlaylists(playlists, input) {
                 const id = track.id || track.uri;
                 if (found[playlist.id][id]) continue;
 
-                // check track name
-                if (track.name.toLowerCase().includes(input)) {
+                // check track name & album
+                if (
+                    track.name.toLowerCase().includes(input)
+                    || track.album.name.toLowerCase().includes(input)
+                ) {
                     found[playlist.id][id] = { playlist: playlist.name, ...track };
                 } else {
                     // Check artist
