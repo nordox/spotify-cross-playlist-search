@@ -7,15 +7,74 @@
   border: 0;
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (min-width: 1700px) {
+  .container {
+    width: 50%;
+  }
+}
+@media only screen and (max-width: 1700px) {
+  .container {
+    width: 60%;
+  }
+}
+@media only screen and (max-width: 1400px) {
+  .container {
+    width: 70%;
+  }
+}
+@media only screen and (max-width: 1200px) {
+  .container {
+    width: 80%;
+  }
+}
+@media only screen and (max-width: 1000px) {
+  .container {
+    width: 90%;
+  }
+}
+@media only screen and (max-width: 900px) {
+  .container {
+    width: 95%;
+  }
+}
+@media only screen and (max-width: 800px) {
+  .container {
+    width: 100%;
+  }
+}
+@media only screen and (max-width: 600px) {
   h1.playlist-name {
     font-size: 1em;
   }
+  .track-name {
+    font-size: 1.2rem;
+  }
+  span.artists {
+    font-size: 0.9rem;
+  }
+  div.open-track-btn > button.open-spotify {
+    padding: 0.5rem 1rem;
+    font-size: 16px;
+  }
+}
+@media only screen and (max-width: 480px) {
   .track-name {
     font-size: 1rem;
   }
   span.artists {
     font-size: 0.75rem;
+  }
+  div.open-track-btn > button.open-spotify {
+    font-size: 12px;
+  }
+  div.open-track-btn > button.open-spotify > img {
+    width: 28px;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  div.album-cover {
+    display: none;
   }
 }
 
@@ -42,6 +101,9 @@ body {
   margin: 0;
 }
 
+.container {
+  margin: auto;
+}
 
 .container > h1,
 .search-section,
@@ -51,12 +113,16 @@ body {
   margin: auto;
 }
 
+.container > h1 {
+  margin-top: 1.5rem;
+  font-family: Ubuntu;
+  color: #c6c6c6;
+}
+
 .search-section {
-  width: 95%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: auto;
   margin-top: 1.5rem;
   gap: 1rem;
 }
@@ -96,8 +162,6 @@ div.loading {
 }
 
 .list-section {
-  width: 95%;
-  margin: auto;
   margin-top: 3rem;
   margin-left: auto;
   display: flex;
@@ -123,9 +187,6 @@ div.loading {
 .album-cover {
   position: relative;
 }
-.album-cover > img {
-  /* border-radius: 50%; */
-}
 .album-cover > svg {
   position: absolute;
   top: 50%;
@@ -142,17 +203,10 @@ div.loading {
   flex-direction: column;
   justify-content: space-evenly;
 }
-.track-name {
-  color: #c6c6c6;
-  text-decoration: none;
-}
 .disabled {
   cursor: not-allowed;
   pointer-events: none;
   opacity: 0.5;
-}
-.track-name:hover {
-  text-decoration: underline;
 }
 .artists {
   font-size: 1rem;

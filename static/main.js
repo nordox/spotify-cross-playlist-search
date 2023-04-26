@@ -1,6 +1,9 @@
 window.addEventListener("message", (event) => {
     if (event.data === "disable-scroll") {
         document.querySelector("body").style.overflow = "hidden";
+        document.querySelector(".container").style.width = "100%";
+        document.querySelector(".container").style.margin = "unset";
+        document.querySelector(".container > h1").style.display = "none";
     }
     if (event.data === "request-access") {
         window.location.href = "/request_access.html";
@@ -96,7 +99,7 @@ function renderFound(found) {
     for (let tracks of Object.values(found)) {
 
         const item = $("<div class=\"found-item\">").html(`
-            <h1 class="playlist-name">${tracks[0].playlist}</h1>
+            <h2 class="playlist-name">${tracks[0].playlist}</h2>
         `);
 
         for (let track of Object.values(tracks)) {
@@ -108,14 +111,14 @@ function renderFound(found) {
             item.append(`
                 <div class="track ${!imgSrc ? "not-avail" : ""} ${!track.id ? "disabled" : ""}">
                 <div class="album-cover">
-                    <img src="${imgSrc || "https://i.scdn.co/image/ab6775700000ee85aeb6fb34fde89e0c758f7bbb"}" width=64 height=64 />
+                    <img src="${imgSrc || "https://i.scdn.co/image/ab6775700000ee85aeb6fb34fde89e0c758f7bbb"}" alt="" width=64 height=64 />
                     <svg role="img" height="16" width="16" viewBox="0 0 16 16" class="Svg-ytk21e-0 jAKAlG"><path d="M10 2v9.5a2.75 2.75 0 11-2.75-2.75H8.5V2H10zm-1.5 8.25H7.25A1.25 1.25 0 108.5 11.5v-1.25z"></path></svg>
                 </div>
                 <div class="track-content">
-                    <a class="track-name" href="${track.uri}" target="_blank">${track.name}</a>
+                    <span class="track-name">${track.name}</span>
                     <span class="artists">${artists.join(', ')} · ${track.album.name}</span>
                 </div>
-                <div class="open-track-btn"><button data-href="${track.external_urls.spotify}" data-uri="${track.uri}"><img src="Spotify_Icon_RGB_White.png" />Play on Spotify</button></div>
+                <div class="open-track-btn"><button class="open-spotify" data-href="${track.external_urls.spotify}" data-uri="${track.uri}"><img src="Spotify_Icon_RGB_White.png" alt="" />Play on Spotify</button></div>
                 </div>
             `);
         }
