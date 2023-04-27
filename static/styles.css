@@ -43,7 +43,7 @@
   }
 }
 @media only screen and (max-width: 600px) {
-  h1.playlist-name {
+  h2.playlist-name {
     font-size: 1em;
   }
   .track-name {
@@ -52,7 +52,8 @@
   span.artists {
     font-size: 0.9rem;
   }
-  div.open-track-btn > button.open-spotify {
+  div.open-track-btn > button.open-spotify,
+  div.open-track-btn > .open-spotify.not-avail {
     padding: 0.5rem 1rem;
     font-size: 16px;
   }
@@ -64,7 +65,8 @@
   span.artists {
     font-size: 0.75rem;
   }
-  div.open-track-btn > button.open-spotify {
+  div.open-track-btn > button.open-spotify,
+  div.open-track-btn > .open-spotify.not-avail {
     font-size: 12px;
   }
   div.open-track-btn > button.open-spotify > img {
@@ -190,6 +192,7 @@ div.loading {
 }
 .playlist-name {
   font-size: 1.5em;
+  margin-bottom: 0.5em;
 }
 .album-cover {
   position: relative;
@@ -225,7 +228,27 @@ div.loading {
   flex-shrink: 0;
   align-self: center;
 }
-div.open-track-btn > button {
+.open-spotify.not-avail {
+  color: unset;
+  text-shadow: unset;
+  background: unset;
+  cursor: initial;
+}
+.open-spotify.not-avail > img,
+.open-spotify.not-avail > span > span {
+  opacity: 0;
+}
+.open-spotify.not-avail > span > div {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.open-spotify.not-avail:hover {
+  color: unset;
+  background: unset;
+  box-shadow: unset;
+}
+div.open-track-btn > .open-spotify {
   display: flex;
   gap: 5px;
   border: none;
@@ -236,10 +259,10 @@ div.open-track-btn > button {
   align-items: center;
   box-shadow: none;
 }
-div.open-track-btn > button:hover {
+div.open-track-btn > .open-spotify:hover {
   color: white;
 }
-div.open-track-btn > button > img {
+div.open-track-btn > .open-spotify > img {
   width: 32px;
 }
 
