@@ -84,6 +84,7 @@
 }
 
 html {
+  min-width: 320px;
   text-rendering: optimizeLegibility;
   font-variant-ligatures: common-ligatures;
   font-kerning: normal;
