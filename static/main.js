@@ -12,6 +12,10 @@ window.addEventListener("message", (event) => {
     }
 });
 
+window.onresize = () => {
+    resize();
+};
+
 let isLoading = false;
 
 document.addEventListener('DOMContentLoaded', () => {
