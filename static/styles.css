@@ -70,6 +70,9 @@
   div.open-track-btn > button.open-spotify > img {
     width: 28px;
   }
+  footer {
+    font-size: 12px !important;
+  }
 }
 
 @media only screen and (max-width: 400px) {
@@ -98,23 +101,27 @@ html::before {
 }
 
 body {
+  position: relative;
+  min-height: 100vh;
   margin: 0;
 }
 
 .container {
+  padding-bottom: 1rem;
   margin: auto;
 }
 
 .container > h1,
 .search-section,
 .list-section,
-.toggle-section {
+.toggle-section,
+footer {
   width: 95%;
   margin: auto;
 }
 
 .container > h1 {
-  margin-top: 1.5rem;
+  padding-top: 1.5rem;
   font-family: Ubuntu;
   color: #c6c6c6;
 }
@@ -334,5 +341,18 @@ div.open-track-btn > button > img {
 }
 
 .toggle:checked:after {
-  left: 50%;
+  left: 52%;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  font-size: 1rem;
+  color: #c6c6c6;
+  font-family: "Ubuntu";
+  padding: 0.5rem;
+}
+footer > div > a,
+footer > div > a:visited {
+  color: #6cae73;
 }

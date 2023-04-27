@@ -4,6 +4,8 @@ window.addEventListener("message", (event) => {
         document.querySelector(".container").style.width = "100%";
         document.querySelector(".container").style.margin = "unset";
         document.querySelector(".container > h1").style.display = "none";
+        document.querySelector("footer").style.position = "static";
+        document.querySelector("footer").style.bottom = "unset";
     }
     if (event.data === "request-access") {
         window.location.href = "/request_access.html";
