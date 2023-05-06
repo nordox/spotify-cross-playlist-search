@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     startLoading();
-    getPlaylists("abc", true).finally(_ => {
+    getPlaylists(true).finally(_ => {
         $(".update-playlists").removeClass("hidden");
         endLoading();
     });
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
             $(".list-section").empty(); // needed?
             startLoading();
 
-            const playlists = await getPlaylists(input, true);
+            const playlists = await getPlaylists(true);
             const found = findInPlaylists(playlists, input);
 
             if (!_.isEmpty(found)) {
@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
         $(".list-section").hide();
         startLoading();
         resize();
-        const playlists = await getPlaylists("abc", false);
+        const playlists = await getPlaylists(false);
         console.log(playlists);
         endLoading();
     });
@@ -88,8 +88,8 @@ function resize(selector) {
     window.parent.postMessage(["setHeight", height + 50], "*");
 }
 
-async function getPlaylists(input, shouldCache) {
-    const response = await fetch(`/playlists`, { cache: shouldCache ? "default" : "reload", headers: { q: input } });
+async function getPlaylists(shouldCache) {
+    const response = await fetch(`/playlists`, { cache: shouldCache ? "default" : "reload"});
     if (response.status === 403) {
         window.location.href = "/request_access.html";
     }

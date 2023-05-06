@@ -93,15 +93,11 @@ function loginHandler(req, res) {
 async function playlistsHandler(req, res, next, refreshAttempt = false) {
     
     const token = req.cookies.access_token;
-    const query = req.headers.q;
 
     if (!req.cookies.p) {
         return res.redirect('/login');
     }
 
-    if (!query) {
-        return res.status(200).send({});
-    }
     try {
         const profileStr = Buffer.from(JSON.stringify(req.cookies.p), 'base64').toString("utf8");
         const playlistsResponse = await spotify.getUserPlaylists(JSON.parse(profileStr).id, token);
