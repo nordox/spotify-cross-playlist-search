@@ -163,7 +163,7 @@ function findInPlaylists(playlists, input) {
                 } else {
                     // Check artist
                     for (let artist of track.artists) {
-                        if (artist.name.toLowerCase().includes(input)) {
+                        if (artist.name?.toLowerCase().includes(input)) {
                             found[playlist.id][id] = { playlist: playlist.name, ...track };
                         }
                     }
